@@ -1,29 +1,28 @@
+#define colorWipeWait 50
 
-int currColorWipePixel = 0;
-uint8_t colorWipeWait = 50;
-
-uint32_t colorWipeColors[] = {seaHawksGreen, seaHawksBlue};
-int currColorWipeIndex = 0;
+int currPixel = 0;
+uint32_t colors[] = {seaHawksGreen, seaHawksBlue};
+int colorIndex = 0;
 
 
 void colorWipeSetup()
 {
-  currColorWipePixel = 0;
-  currColorWipeIndex = 0;
+  currPixel = 0;
+  colorIndex = 0;
 }
 
 void colorWipeDrawFrame(){
   
-  strip.setPixelColor(currColorWipePixel, colorWipeColors[currColorWipeIndex]);
+  strip.setPixelColor(currPixel, colors[colorIndex]);
   strip.show();
   delay(colorWipeWait);
   
   //if we've lit up all the pixels then change color and start again
-  currColorWipePixel++;
-  if(currColorWipePixel >= LIGHT_STRIP_LED_COUNT)
+  currPixel++;
+  if(currPixel >= LIGHT_STRIP_LED_COUNT)
   {
-      currColorWipePixel = 0;
-      currColorWipeIndex = (currColorWipeIndex + 1) %2;
+      currPixel = 0;
+      colorIndex = (colorIndex + 1) %2;
   }
 }
 
