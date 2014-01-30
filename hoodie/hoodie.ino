@@ -1,12 +1,12 @@
 #include "./Adafruit_NeoPixel.h"
 #include "./EasyButton.h"
 
-#define LED_PIN 7
-#define BUTTON_PIN 9
-#define LIGHT_STRIP_PIN 10
-#define LIGHT_STRIP_LED_COUNT 46
+#define LED_PIN 1
+#define BUTTON_PIN 2
+#define LIGHT_STRIP_PIN 1
+#define LIGHT_STRIP_LED_COUNT 10
 
-#define MODE_COUNT 2
+#define MODE_COUNT 5
 #define OFF_MODE -1
 
 // --------------------------------------------------------------------------------
@@ -18,28 +18,22 @@ const uint32_t seaHawksBlue = strip.Color(0, 22, 63);
 
 // --------------------------------------------------------------------------------
 
-void (*startFunctions[MODE_COUNT])();
-void (*loopFunctions[MODE_COUNT])();
-
+void (*startFunctions[])() = {colorWipeSetup, theaterChaseDuoSetup, waveSetup, runningLightsSetup, skittleSetup};
+void (*loopFunctions[])() = {colorWipeDrawFrame, theaterChaseDuoDrawFrame, waveDrawFrame, runningLightsDrawFrame, skittleDrawFrame};
 
 // --------------------------------------------------------------------------------
 
-EasyButton button(BUTTON_PIN, buttonPush, CALL_IN_PUSHED, true);
-EasyButton button2(BUTTON_PIN, stripToggle, CALL_IN_HOLD, true);
+EasyButton button(BUTTON_PIN);
+//EasyButton button(BUTTON_PIN, buttonPush, CALL_IN_PUSHED, true);
+//EasyButton button2(BUTTON_PIN, stripToggle, CALL_IN_HOLD, true);
 
 void setup() {
-  pinMode(LED_PIN, OUTPUT);
-  digitalWrite(LED_PIN, HIGH);
-  
-  startFunctions[0] = colorWipeSetup;
-  loopFunctions[0] = colorWipeDrawFrame;
-  
-  startFunctions[1] = theaterChaseDuoSetup;
-  loopFunctions[1] = theaterChaseDuoDrawFrame;
+  //pinMode(LED_PIN, OUTPUT);
+  //digitalWrite(LED_PIN, HIGH);
 
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
-  colorWipe(strip.Color(128, 128, 128), 25);
+  colorWipe(strip.Color(32, 32, 32), 25);
 }
 
 int currentLoop = OFF_MODE;
@@ -47,8 +41,8 @@ int stripOn = true;
 
 void loop() {
   // this saves calls to millis()
-  unsigned long myMillis = millis();
-  button.update(myMillis);
+  //unsigned long myMillis = millis();
+  /*button.update(myMillis);
   button2.update(myMillis);
   
   if(currentLoop != OFF_MODE)
@@ -58,7 +52,7 @@ void loop() {
     {
       loopFunc();
     }
-  }  
+  }*/  
 }
 
 void stripToggle()

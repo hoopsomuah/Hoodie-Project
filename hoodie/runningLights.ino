@@ -1,5 +1,5 @@
-int currRunningLightsPixel = 0;
-int chaseLength = 4;
+#define chaseLength 4
+
 int startChase = 0;
 int endChase = chaseLength;
 
@@ -13,7 +13,7 @@ int runningLightsState = 0;
 
 void runningLightsSetup()
 {
-  currRunningLightsPixel = 0;
+  currPixel = 0;
   runningLightsState = 0; 
   startChase = 0;
   endChase = chaseLength;
@@ -24,27 +24,27 @@ void runningLightsDrawFrame()
   //colorwipe
   if(runningLightsState == 0)
   {
-    strip.setPixelColor(currRunningLightsPixel, baseColor);
+    strip.setPixelColor(currPixel, baseColor);
     strip.show();
     delay(50);
     
-    currRunningLightsPixel++;
-    if(currRunningLightsPixel >= LIGHT_STRIP_LED_COUNT)
+    currPixel++;
+    if(currPixel >= LIGHT_STRIP_LED_COUNT)
     {
       runningLightsState = 1;
-      currRunningLightsPixel = 0;
+      currPixel = 0;
     }
   }
   
   //start the chase
   if(runningLightsState == 1)
   {
-    strip.setPixelColor(currRunningLightsPixel, chaseColor);
+    strip.setPixelColor(currPixel, chaseColor);
     strip.show();
     delay(50);
     
-    currRunningLightsPixel++;
-    if(currRunningLightsPixel >= chaseLength)
+    currPixel++;
+    if(currPixel >= chaseLength)
     {
       runningLightsState = 2;
     }

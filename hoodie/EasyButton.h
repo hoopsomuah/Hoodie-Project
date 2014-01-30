@@ -31,17 +31,17 @@ enum FunctionCallOptions
 class EasyButton
 {
 private:
-    bool m_current_state;
-    bool m_press_notifier;
-    bool m_release_notifier;
-    bool m_hold;
-    bool m_pullup_mode;
-    unsigned long m_hold_time;
-    unsigned long m_release_time;
-    int m_pin;
-    unsigned int m_push_Threshold;
-    void (*m_function)();
-    FunctionCallOptions m_call_option;
+    bool m_current_state; //1
+    bool m_press_notifier; //2
+    bool m_release_notifier; //3
+    bool m_hold; //4
+    bool m_pullup_mode; //5
+    unsigned long m_hold_time; //9
+    unsigned long m_release_time; //13
+    int m_pin; //15
+    unsigned int m_push_Threshold; //17
+    void (*m_function)(); //21
+    FunctionCallOptions m_call_option; //25
 
 public:
     EasyButton(int buttonPin, void (*function)() = NULL, FunctionCallOptions call_option = CALL_NONE, bool pullup = false);

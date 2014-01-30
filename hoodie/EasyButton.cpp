@@ -1,7 +1,7 @@
 #include "EasyButton.h"
 
 EasyButton::EasyButton(int buttonPin, void (*function)() /* = NULL */, FunctionCallOptions call_option /* = CALL_NONE */, bool pullup /* = false */)
-{
+{/*
     m_function = function;
     m_call_option = call_option;
     m_current_state = false;
@@ -14,9 +14,13 @@ EasyButton::EasyButton(int buttonPin, void (*function)() /* = NULL */, FunctionC
     m_pullup_mode = pullup;
 
     if (m_pullup_mode)
-        pinMode(m_pin, INPUT_PULLUP);
+    {    
+      //pinMode(m_pin, INPUT_PULLUP);
+      //pinMode(m_pin, INPUT);
+      //digitalWrite(m_pin, HIGH);
+    }
     else
-        pinMode(m_pin, INPUT);
+        pinMode(m_pin, INPUT);*/
 }
 
 void EasyButton::update(unsigned long millisec /* = NULL */)
