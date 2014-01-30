@@ -1,20 +1,21 @@
 #include "./Adafruit_NeoPixel.h"
 #include "./ToggleButton.h"
 
-#define LED_PIN 7
-#define BUTTON_PIN 9
-#define LIGHT_STRIP_PIN 10
-#define LIGHT_STRIP_LED_COUNT 46
+#define LED_PIN 1
+#define BUTTON_PIN 0
+#define LIGHT_STRIP_PIN 1
+#define LIGHT_STRIP_LED_COUNT 97
 
-#define MODE_COUNT 2
+#define MODE_COUNT 5
 #define INIT_MODE -1
+
+
+#define SEAHAWKS_GREEN strip.Color(50, 255, 5)
+#define SEAHAWKS_BLUE strip.Color(0, 22, 63)
 
 // --------------------------------------------------------------------------------
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(LIGHT_STRIP_LED_COUNT, LIGHT_STRIP_PIN, NEO_GRB + NEO_KHZ800);
-
-const uint32_t seaHawksGreen = strip.Color(50, 255, 5);
-const uint32_t seaHawksBlue = strip.Color(0, 22, 63);
 
 // --------------------------------------------------------------------------------
 
@@ -46,9 +47,19 @@ void loop() {
         colorWipeDrawFrame();
         break;
       case 1:
-      theaterChaseDuoDrawFrame();
+        theaterChaseDuoDrawFrame();
         break;    
+      case 2:
+        runningLightsDrawFrame();
+        break;
+      case 3:
+        skittleDrawFrame();
+        break;
+      case 4:
+        waveDrawFrame();
+        break;
     }
+  }  
 }
 
 void buttonPush(int count)
@@ -69,6 +80,15 @@ void startCurrentMode()
       break;
     case 1:
       theaterChaseDuoSetup();
+      break;
+    case 2:
+      runningLightsSetup();
+      break;
+    case 3:
+      skittleSetup();
+      break;
+    case 4:
+      waveSetup();
       break;
   }
 }
@@ -96,16 +116,6 @@ void loopCurrentMode()
 
 }
 
-
-void allRed()
-{
-  colorWipe(strip.Color(255, 0, 0), 50);
-}
-
-void allBlue()
-{
-  colorWipe(strip.Color(0, 0, 255), 50);
-}
 
 // Fill the dots one after the other with a color
 void colorWipe(uint32_t c, uint8_t wait)
