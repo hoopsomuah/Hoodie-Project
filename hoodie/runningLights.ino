@@ -3,8 +3,8 @@
 int startChase = 0;
 int endChase = chaseLength;
 
-uint32_t chaseColor = seaHawksGreen;
-uint32_t baseColor = seaHawksBlue;
+#define CHASE_COLOR SEAHAWKS_GREEN
+#define BASE_COLOR SEAHAWKS_BLUE
 
 //state 0 = colorwipe
 //state 1 = start the chase
@@ -24,7 +24,7 @@ void runningLightsDrawFrame()
   //colorwipe
   if(runningLightsState == 0)
   {
-    strip.setPixelColor(currPixel, baseColor);
+    strip.setPixelColor(currPixel, BASE_COLOR);
     strip.show();
     delay(50);
     
@@ -39,7 +39,7 @@ void runningLightsDrawFrame()
   //start the chase
   if(runningLightsState == 1)
   {
-    strip.setPixelColor(currPixel, chaseColor);
+    strip.setPixelColor(currPixel, CHASE_COLOR);
     strip.show();
     delay(50);
     
@@ -57,8 +57,8 @@ void runningLightsDrawFrame()
     startChase = (startChase + 1) % strip.numPixels();
     endChase = (endChase + 1) % strip.numPixels();
     
-    strip.setPixelColor(oldStart, baseColor);
-    strip.setPixelColor(endChase, chaseColor);
+    strip.setPixelColor(oldStart, BASE_COLOR);
+    strip.setPixelColor(endChase, CHASE_COLOR);
     strip.show();
     delay(50);
   }

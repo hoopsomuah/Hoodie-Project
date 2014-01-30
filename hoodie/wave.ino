@@ -13,8 +13,8 @@ void waveDrawFrame()
   //wave green up
   if(waveState == 0)
   {
-     strip.setPixelColor(currPixelWave, seaHawksGreen); 
-     strip.setPixelColor(LIGHT_STRIP_LED_COUNT - currPixelWave, seaHawksGreen);
+     strip.setPixelColor(currPixelWave, SEAHAWKS_GREEN); 
+     strip.setPixelColor(LIGHT_STRIP_LED_COUNT - currPixelWave, SEAHAWKS_GREEN);
      strip.show();
      delay(25);
      
@@ -28,8 +28,8 @@ void waveDrawFrame()
   //wave blue down
   if(waveState == 1)
   {
-    strip.setPixelColor(currPixelWave, seaHawksBlue);
-    strip.setPixelColor(LIGHT_STRIP_LED_COUNT - currPixelWave, seaHawksBlue);
+    strip.setPixelColor(currPixelWave, SEAHAWKS_BLUE);
+    strip.setPixelColor(LIGHT_STRIP_LED_COUNT - currPixelWave, SEAHAWKS_BLUE);
     strip.show();
     delay(25);
     

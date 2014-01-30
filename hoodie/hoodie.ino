@@ -49,7 +49,6 @@ void loop() {
       theaterChaseDuoDrawFrame();
         break;    
     }
-  }  
 }
 
 void buttonPush(int count)

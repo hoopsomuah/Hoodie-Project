@@ -1,22 +1,33 @@
 
+bool state = true;
 void theaterChaseDuoSetup()
 {
-  colorIndex = 0;
 }
 
 //Theatre-style crawling lights.
 void theaterChaseDuoDrawFrame() {
+  if(state)
+  {
     for (int i=0; i < strip.numPixels(); i=i+2) {
-      strip.setPixelColor(i, colors[colorIndex]);    //turn every other pixel to green
+          strip.setPixelColor(i, SEAHAWKS_GREEN);    //turn every other pixel to green
     }
-    
-    colorIndex = (colorIndex + 1) % 2;
     
     for (int i=1; i < strip.numPixels(); i=i+2) {
-      strip.setPixelColor(i, colors[colorIndex]);        //turn every other pixel o blue
+      strip.setPixelColor(i, SEAHAWKS_BLUE);        //turn every other pixel o blue
+    }    
+  }
+  else
+  {
+    for (int i=0; i < strip.numPixels(); i=i+2) {
+          strip.setPixelColor(i, SEAHAWKS_GREEN);    //turn every other pixel to green
     }
     
-    strip.show();
-    delay(100);
+    for (int i=1; i < strip.numPixels(); i=i+2) {
+      strip.setPixelColor(i, SEAHAWKS_GREEN);        //turn every other pixel o blue
+    }
+  }
+  state = !state;
+  strip.show();
+  delay(100);
 }
 
