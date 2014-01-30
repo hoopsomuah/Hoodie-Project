@@ -1,5 +1,5 @@
 #include "./Adafruit_NeoPixel.h"
-#include "./EasyButton.h"
+#include "./ToggleButton.h"
 
 #define LED_PIN 7
 #define BUTTON_PIN 9
@@ -7,7 +7,7 @@
 #define LIGHT_STRIP_LED_COUNT 46
 
 #define MODE_COUNT 2
-#define OFF_MODE -1
+#define INIT_MODE -1
 
 // --------------------------------------------------------------------------------
 
@@ -18,82 +18,85 @@ const uint32_t seaHawksBlue = strip.Color(0, 22, 63);
 
 // --------------------------------------------------------------------------------
 
-void (*startFunctions[MODE_COUNT])();
-void (*loopFunctions[MODE_COUNT])();
-
 
 // --------------------------------------------------------------------------------
 
-EasyButton button(BUTTON_PIN, buttonPush, CALL_IN_PUSHED, true);
-EasyButton button2(BUTTON_PIN, stripToggle, CALL_IN_HOLD, true);
+ToggleButton button(BUTTON_PIN, buttonPush, buttonHold);
 
 void setup() {
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, HIGH);
-  
-  startFunctions[0] = colorWipeSetup;
-  loopFunctions[0] = colorWipeDrawFrame;
-  
-  startFunctions[1] = theaterChaseDuoSetup;
-  loopFunctions[1] = theaterChaseDuoDrawFrame;
 
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
-  colorWipe(strip.Color(128, 128, 128), 25);
+  colorWipe(strip.Color(64, 64, 64), 25);
 }
 
-int currentLoop = OFF_MODE;
+int currentLoop = INIT_MODE;
 int stripOn = true;
 
 void loop() {
-  // this saves calls to millis()
-  unsigned long myMillis = millis();
-  button.update(myMillis);
-  button2.update(myMillis);
+  button.update();
   
-  if(currentLoop != OFF_MODE)
+  if(currentLoop != INIT_MODE && stripOn)
   {
-    void(*loopFunc)()  = loopFunctions[currentLoop];
-    if(loopFunc)
+    switch(currentLoop)
     {
-      loopFunc();
+      case 0:
+        colorWipeDrawFrame();
+        break;
+      case 1:
+      theaterChaseDuoDrawFrame();
+        break;    
     }
   }  
 }
 
-void stripToggle()
+void buttonPush(int count)
 {
   if(stripOn)
   {
-    for(uint16_t i=0; i<strip.numPixels(); i++) {
-      strip.setPixelColor(i, 0);
-    }
-    strip.show();
-    stripOn = false;
-  } else {
-    stripOn = true;
-    currentLoop = 0;
-    startCurrentMode();
-  }
-}
-
-void buttonPush()
-{
-  if(stripOn)
-  {
-    currentLoop = (currentLoop + 1) % MODE_COUNT;
+    currentLoop = (currentLoop + count) % MODE_COUNT;
     startCurrentMode();
   }
 }
 
 void startCurrentMode()
 {
-  void (*setupFunc)() = startFunctions[currentLoop];
-  if(setupFunc)
+  switch(currentLoop)
   {
-    setupFunc();
+    case 0:
+      colorWipeSetup();
+      break;
+    case 1:
+      theaterChaseDuoSetup();
+      break;
   }
 }
+
+void buttonHold() // Toggle
+{
+  if(stripOn)
+  {
+    // turn the strip off
+    for(uint16_t i=0; i<strip.numPixels(); i++) {
+      strip.setPixelColor(i, 0);
+    }
+    strip.show();
+    stripOn = false;
+  } else {
+    // turn the strip on
+    stripOn = true;
+    currentLoop = 0;
+    startCurrentMode();
+  }
+}
+
+void loopCurrentMode()
+{
+
+}
+
 
 void allRed()
 {
