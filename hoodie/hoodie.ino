@@ -31,11 +31,11 @@ void setup() {
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, HIGH);
   
-  startFunctions[0] = allRed;
-  loopFunctions[0] = NULL;
+  startFunctions[0] = colorWipeSetup;
+  loopFunctions[0] = colorWipeDrawFrame;
   
-  startFunctions[1] = allBlue;
-  loopFunctions[1] = NULL;
+  startFunctions[1] = theaterChaseDuoSetup;
+  loopFunctions[1] = theaterChaseDuoDrawFrame;
 
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'

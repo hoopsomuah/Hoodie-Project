@@ -1,5 +1,5 @@
 
-uint32_t theaterChaseColors[] = {SEAHAWKS_GREEN, SEAHAWKS_BLUE};
+uint32_t theaterChaseColors[] = {seaHawksGreen, seaHawksBlue};
 int theaterChaseIndex = 0;
 
 void theaterChaseDuoSetup()
