@@ -14,7 +14,7 @@ void skittleDrawFrame()
   strip.show();
   delay(50);
   
-  currPixel = (currPixel + 1)%256;
+  currPixel = (currPixel + 5)%256;
 }
 
 // Input a value 0 to 255 to get a color value.
